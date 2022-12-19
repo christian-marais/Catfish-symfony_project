@@ -15,7 +15,7 @@ class FirstController extends AbstractController
             'controller_name' => 'FirstController',
         ]);
     }
-    #[Route('/sayHello/{name}/{prenom}', name: 'hello')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    #[Route('/sayhello/{name}/{prenom}', name: 'hello')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
     public function hello($name,$prenom): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
     {  
         return $this->render('first/hello.html.twig', [
