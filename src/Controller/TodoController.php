@@ -19,6 +19,7 @@ class TodoController extends AbstractController
                 'vendre'=>'revendre la clé'
             );
             $session->set('todos',$todos);
+            $this->addFlash('info','la liste vient d\'initialisée');
         }
         
         //on va afficher notre tableau todo
@@ -45,13 +46,15 @@ class TodoController extends AbstractController
             // si non
             // afficher un message d'erreur 
         }
-        
+       // return $this->redirectToRoute('todo')
         //on va afficher notre tableau todo
         //si j'ai mon tableau de todo dans ma session je l'affiche
         //sinon je l'initialise puis j'affiche
 
         return $this->render('todo/index.html.twig', [
             'controller_name' => 'TodoController',
+            'name'=>$name,
+            'content'=>$content
         ]);
     }
 }
