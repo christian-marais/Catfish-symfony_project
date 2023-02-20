@@ -20,9 +20,11 @@ class SessionController extends AbstractController
         }else{
             $nbreVisite = 1;
         }
+        if()
         $session->set('nbreVisite',$nbreVisite);
         return $this->render('session/index.html.twig', [
-            'controller_name' => 'SessionController'
+            'controller_name' => 'SessionController',
+            'nbreVisite'=>$nbreVisite
         ]);
     }
 }
