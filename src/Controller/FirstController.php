@@ -39,7 +39,7 @@ class FirstController extends AbstractController
     }
 
     #[Route(
-        '/multiply/{entier1}/{entier2}',
+        '/multiply/{entier1?<\d+>2}/{entier2}',
          name: 'multiply',
          requirements:['entier1' =>'\d+','entier2' =>'\d+'])]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
     public function multiply($entier1,$entier2): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
@@ -56,5 +56,13 @@ class FirstController extends AbstractController
     {   
         $resultat = $entier1 * 2;
         return new Response(content: '<html><body><h1>'.$resultat.'</h1></body></html>');
+    }
+
+    #[Route(
+        '/template',
+         name: 'template')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    public function template(): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
+    {   
+        return $this->render('template.html.twig');
     }
 }
