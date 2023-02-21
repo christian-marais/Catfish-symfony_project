@@ -1,0 +1,24 @@
+{% extends 'template.html.twig' %}
+
+{% block Title %}
+    {{controller_name}} 
+{% endblock %}
+
+{% block PageTitle %}
+    {{controller_name}} 
+{% endblock %}
+
+{% block body %}
+<table class="table">
+    {% for note in notes %}
+        <tr>
+           <td>{{note}}</td> 
+        </tr>
+    {% endfor %}
+</table>
+<div class="alert alert-info">
+    <p>Nombre de notes : {{notes|length}}</p>
+    <p>Note minimal : {{min(notes)}}</p>
+    <p>Note maximal : {{max(notes)}}</p>
+</div>
+{% endblock %}
