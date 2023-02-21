@@ -74,9 +74,7 @@ class TodoController extends AbstractController
         $session=$request->getSession();
         if($session->has('todos')){
                 $todos=$session->get('todos');
-                $todos=array_filter($todos,function($key) use($name){
-                    return $key!==$name;
-                },ARRAY_FILTER_USE_KEY);
+                unset($todos[$name]);
                 $session->set('todos',$todos);
                 $this->addFlash(
                     type:'info',
