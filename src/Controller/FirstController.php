@@ -21,7 +21,7 @@ class FirstController extends AbstractController
     #[Route('/sayhello/{name}/{firstname}', name: 'say.hello')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
     public function hello(Request $request ,$name,$firstname): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
     {   
-        dd($request->request);
+       
         $rand= 1;//rand(0,10);
         if($rand >=2){
             
@@ -34,5 +34,25 @@ class FirstController extends AbstractController
             ]);
         }
       
+    }
+
+    #[Route(
+        '/multiply/{entier1}/{entier2}',
+         name: 'multiply',
+         requirements:['entier1' =>'\d+','entier2' =>'\d+'])]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    public function multiply($entier1,$entier2): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
+    {   
+        $resultat = $entier1 * $entier2;
+        return new Response(content:'<h1>'.$resultat.'</h1>');
+      
+    }
+    #[Route(
+        '/{entier1}',
+         name: 'generique',
+         requirements:['entier1' =>'\d+'])]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    public function generiqueRoute($entier1): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
+    {   
+        $resultat = $entier1 * 2;
+        return new Response(content: '<html><body><h1>'.$resultat.'</h1></body></html>');
     }
 }
