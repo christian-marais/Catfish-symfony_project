@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FirstController extends AbstractController
 {  
-    #[Route('/first/{nom}', name:'first')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    #[Route('/first/{nom?first}', name:'first')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
     public function index($nom): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
     {   
         //die('je suis la requete '.$first);
@@ -18,7 +18,7 @@ class FirstController extends AbstractController
             'controller_name' => $nom
          ]);
     }
-    #[Route('/sayhello/{name}/{firstname}', name: 'say.hello')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
+    #[Route('/sayhello/{name?christian}/{firstname?marais}', name: 'say.hello')]// #[Route est un attribut accessible à partir de la version 8 de php, voir que composer possède bien la version 8 de php
     public function hello(Request $request ,$name,$firstname): Response // symfony a partir d'une requete envoie une réponse, la fonction retourne une réponse
     {   
        
@@ -30,7 +30,9 @@ class FirstController extends AbstractController
             
         }else{
             return $this->render('first/hello.html.twig', [
-                'nom'=>$name,'prenom'=>$firstname
+                'nom'=>$name,
+                'prenom'=>$firstname,
+                'path'=>'         '
             ]);
         }
       
