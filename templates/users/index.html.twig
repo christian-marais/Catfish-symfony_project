@@ -1,0 +1,23 @@
+{% extends 'template.html.twig' %}
+{% set title = 'users' %}
+
+{% block Title %}{{title|upper}}{% endblock %}
+
+{% block PageTitle %}Liste des {{title|capitalize}}{% endblock %}
+
+{% block body %}
+<table class="table">
+    <tr>
+        <th>NOM</th>
+        <th>PRENOM</th>
+        <th>AGE</th>
+    </tr>
+    {% for user in users %}
+        <tr class="table-{% if loop.index is even %}danger{% else %}warning{% endif %}">  
+            <td> {{user['name']}}</td>
+            <td> {{user['firstname']}}</td>
+            <td> {{user['age']}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
