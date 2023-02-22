@@ -23,7 +23,18 @@ class PersonneController extends AbstractController
         ]);
     }
 
-    
+    #[Route('/personne/filterAge/{ageMin}/{ageMax}', name: 'personne.list.age')]
+    public function findPersonneByAge(ManagerRegistry $doctrine,$ageMin,$ageMax): Response
+    {   
+        $repository=$doctrine->getRepository(persistentObject:Personne::class);
+        $personnes=$repository->findByAgeInterval($ageMin,$ageMax);
+        return $this->render('personne/index.html.twig', [
+            'controller_name' => 'PersonneController',
+            'personnes'=>$personnes,
+            'isPaginated'=>false
+        ]);
+    }
+
     #[Route('/alls/{page<\d+>?1}/{nb<\d+>?12}', name: 'personne.list.alls')]
     public function indexAlls(ManagerRegistry $doctrine,$page,$nb): Response
     {   
@@ -63,15 +74,18 @@ class PersonneController extends AbstractController
     }
 
     #[Route('/personne/update/{id}/{name}/{firstname}/{age}', name: 'personne.update')]
-    public function update(ManagerRegistry $doctrine,Personne $personne = null): RedirectResponse
+    public function update(ManagerRegistry $doctrine,Personne $personne = null,$name,$firstname,$age): RedirectResponse
     {   
         if($personne){
+            $personne->setFirstname($name);
+            $personne->setName($firstname);
+            $personne->setAge($age);
             $entityManager=$doctrine->getManager();
             $entityManager->persist($personne);
             $entityManager->flush();
             $this->addFlash(
                 type:'success',
-                message: 'La personne'. $personne->getName() .'has been deleted'
+                message: 'La personne'. $personne->getName() .'a été mise à jour avec succès'
             );
         }else{
             $this->addFlash(
