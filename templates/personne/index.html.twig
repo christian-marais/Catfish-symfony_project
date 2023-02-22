@@ -10,41 +10,22 @@
         </div>
     {% endfor %}
 
-    {{dump(personnes)}}
-    <table class="table">
-    <tr>
-        <th>
-            Nom
-        </th>
-        <th>
-           Prenom
-        </th>
-        <th>
-           Age
-        </th>
-        <th>
-           Job
-        </th>
-     </tr>
-     {% for personne in personnes %}
-     <tr class="table-{% if loop.index is even %}danger{% else %}warning{% endif %}">
-        <td>
-            {{personne.name}} 
-        </td>
-        <td>
-            {{personne.firstname}}
-        </td>
-        <td>
-            {{personne.age}}
-        </td>
-        <td>
-            {{personne.job}}
-        </td>
-     </tr>
-    {% endfor %}
-    
-    </table>
-   
+    {#{dump(personnes)}#}
 
-
+    <div class="row">
+        {% for personne in personnes %}
+            <div class="card col-3 m-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{personne.name}} {{personne.firstname}} </h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Age : {{personne.age}}</li>
+                    <li class="list-group-item">Job : {{personne.job}}</li>
+                </ul>
+                <div class="card-body">
+                     <a href="{{path('personne.detail',{id:personne.id})}}" class="card-link">Détail</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
