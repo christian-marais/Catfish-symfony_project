@@ -10,11 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PersonneController extends AbstractController
 {
-    #[Route('/personne', name: 'app_personne')]
-    public function index(): Response
-    {
+    #[Route('/personne', name: 'personne.list')]
+    public function index(ManagerRegistry $doctrine): Response
+    {   
+        $repository=$doctrine->getRepository(persistentObject:Personne::class);
+        $personnes=$repository->findAll();
         return $this->render('personne/index.html.twig', [
             'controller_name' => 'PersonneController',
+            'personnes'=>$personnes
         ]);
     }
     #[Route(path:'/personne/add/', name:'personne.add')]
@@ -34,6 +37,6 @@ class PersonneController extends AbstractController
                 message:'la personne a'.$personne->getName().' été créé');
         }
 
-        return $this->render(view:'personne/index.html.twig', parameters: array('personne' => $personne));
+        return $this->render(view:'personne/addpersonne.html.twig', parameters: array('personne' => $personne));
     }
 }

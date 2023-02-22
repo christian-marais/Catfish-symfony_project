@@ -3,15 +3,48 @@
 {% block PageTitle %}Hello PersonneController!{% endblock %}
 
 {% block body %}
-{{dump(personne)}}
-<div class="alert alert-success">
- {{personne.name}} {{personne.firstname}}  a été créé.
-</div>
 
-{% for name,value in app.session.flashBag.get('success')%}
-    <div class="alert alert-danger">
-        {{message}}
-    </div>
-{% endfor %}
+    {% for name,value in app.session.flashBag.get('success')%}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    {{dump(personnes)}}
+    <table class="table">
+    <tr>
+        <th>
+            Nom
+        </th>
+        <th>
+           Prenom
+        </th>
+        <th>
+           Age
+        </th>
+        <th>
+           Job
+        </th>
+     </tr>
+     {% for personne in personnes %}
+     <tr class="table-{% if loop.index is even %}danger{% else %}warning{% endif %}">
+        <td>
+            {{personne.name}} 
+        </td>
+        <td>
+            {{personne.firstname}}
+        </td>
+        <td>
+            {{personne.age}}
+        </td>
+        <td>
+            {{personne.job}}
+        </td>
+     </tr>
+    {% endfor %}
+    
+    </table>
+   
+
 
 {% endblock %}

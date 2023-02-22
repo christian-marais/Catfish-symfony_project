@@ -22,10 +22,6 @@ class PersonneFixture extends Fixture
             $manager->persist($personne);
 
         }
-      
-
-       
-
         $manager->flush();
     }
 }

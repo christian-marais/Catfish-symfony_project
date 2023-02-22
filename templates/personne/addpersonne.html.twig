@@ -1,0 +1,17 @@
+{% extends 'template.html.twig' %}
+
+{% block PageTitle %}Hello PersonneController!{% endblock %}
+
+{% block body %}
+{{dump(personne)}}
+<div class="alert alert-success">
+ {{personne.name}} {{personne.firstname}}  a été créé.
+</div>
+
+{% for name,value in app.session.flashBag.get('success')%}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+{% endfor %}
+
+{% endblock %}
