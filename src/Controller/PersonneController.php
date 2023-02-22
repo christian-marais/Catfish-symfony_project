@@ -18,7 +18,27 @@ class PersonneController extends AbstractController
         $personnes=$repository->findAll();
         return $this->render('personne/index.html.twig', [
             'controller_name' => 'PersonneController',
-            'personnes'=>$personnes
+            'personnes'=>$personnes,
+            'isPaginated'=>false
+        ]);
+    }
+
+    
+    #[Route('/alls/{page<\d+>?1}/{nb<\d+>?12}', name: 'personne.list.alls')]
+    public function indexAlls(ManagerRegistry $doctrine,$page,$nb): Response
+    {   
+        $repository=$doctrine->getRepository(persistentObject:Personne::class);
+        $personnes=$repository->findBy([],['age'=>'ASC'],$nb,($page -1) * $nb);
+        $nbPersonnes=$repository->count([]);
+        $nbPages=ceil($nbPersonnes/$nb);
+    
+        return $this->render('personne/index.html.twig', [
+            'controller_name' => 'PersonneController',
+            'personnes'=>$personnes,
+            'isPaginated'=>true,
+            'nbPages'=>$nbPages,
+            'page'=>$page,
+            'nb'=>$nb
         ]);
     }
     

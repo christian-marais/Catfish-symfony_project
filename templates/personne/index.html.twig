@@ -28,4 +28,23 @@
             </div>
         {% endfor %}
     </div>
+    {% if isPaginated %}
+    <div class="row ">
+        <nav aria-label="Page navigation example ms-4">
+            <ul class="pagination">
+                {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page: page - 1,nb:nb})}}">Previous</a></li>
+                    
+                {% endif %}
+                {% for i in range(page,nbPages) %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page:i,nb:nb})}}">{{i}}</a></li>
+                {% endfor %}
+                {% if page < nbPages %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page:page + 1,nb:nb})}}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+ 
+    {% endif %}
 {% endblock %}
