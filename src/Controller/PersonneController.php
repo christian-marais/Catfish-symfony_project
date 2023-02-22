@@ -41,6 +41,47 @@ class PersonneController extends AbstractController
             'nb'=>$nb
         ]);
     }
+    #[Route('/personne/delete/{id}', name: 'personne.delete')]
+    public function delete(ManagerRegistry $doctrine,Personne $personne = null): RedirectResponse
+    {   
+        if($personne){
+            $entityManager=$doctrine->getManager();
+            $entityManager->remove($personne);
+            $entityManager->flush();
+            $this->addFlash(
+                type:'success',
+                message: 'La personne '. $personne->getName() .' has been deleted'
+            );
+        }else{
+            $this->addFlash(
+                type:'error',
+                message: "la personne n'a pas été trouvée"
+            );
+        }
+        return $this->redirectToRoute('personne.list');
+        
+    }
+
+    #[Route('/personne/update/{id}/{name}/{firstname}/{age}', name: 'personne.update')]
+    public function update(ManagerRegistry $doctrine,Personne $personne = null): RedirectResponse
+    {   
+        if($personne){
+            $entityManager=$doctrine->getManager();
+            $entityManager->persist($personne);
+            $entityManager->flush();
+            $this->addFlash(
+                type:'success',
+                message: 'La personne'. $personne->getName() .'has been deleted'
+            );
+        }else{
+            $this->addFlash(
+                type:'error',
+                message: "la personne n'a pas été trouvée"
+            );
+        }
+        return $this->redirectToRoute('personne.list');
+        
+    }
     
     #[Route('/personne/{id<\d+>?1}', name: 'personne.detail')]
     public function PersonneDetail(Personne $personne = null,$id): mixed

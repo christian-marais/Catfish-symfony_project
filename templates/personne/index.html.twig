@@ -23,7 +23,8 @@
                     <li class="list-group-item">Job : {{personne.job}}</li>
                 </ul>
                 <div class="card-body">
-                     <a href="{{path('personne.detail',{id:personne.id})}}" class="card-link">Détail</a>
+                     <a href="{{path('personne.detail',{id:personne.id})}}" class="card-link btn btn-info">Détail</a>
+                     <a href="{{path('personne.delete',{id:personne.id})}}" class="card-link btn btn-danger">Supprimer</a>
                 </div>
             </div>
         {% endfor %}
@@ -45,6 +46,5 @@
             </ul>
         </nav>
     </div>
- 
     {% endif %}
 {% endblock %}
