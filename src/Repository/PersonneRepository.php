@@ -67,7 +67,7 @@ class PersonneRepository extends ServiceEntityRepository
     /**
      * @return Personne[] Returns an array of Personne objects
      */
-    public function StatsByAgeInterval($ageMin,$ageMax): array
+    public function statsByAgeInterval($ageMin,$ageMax): array
     {
         $qb=$this->createQueryBuilder('p')
             ->select(select:'avg(p.age) as ageMoyen, count(p.id) as nombrePersonne');

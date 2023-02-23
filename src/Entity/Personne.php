@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
@@ -22,8 +24,20 @@ class Personne
     #[ORM\Column(nullable: true)]
     private ?int $age = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $job = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?profile $profile = null;
+
+    #[ORM\ManyToMany(targetEntity: Hobbie::class, inversedBy: 'personnes')]
+    private Collection $hobbies;
+
+    #[ORM\ManyToOne(inversedBy: 'personnes')]
+    private ?Job $job = null;
+
+    public function __construct()
+    {
+        $this->hobbies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,12 +80,49 @@ class Personne
         return $this;
     }
 
-    public function getJob(): ?string
+    
+    public function getProfile(): ?profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?profile $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hobbie>
+     */
+    public function getHobbies(): Collection
+    {
+        return $this->hobbies;
+    }
+
+    public function addHobby(Hobbie $hobby): self
+    {
+        if (!$this->hobbies->contains($hobby)) {
+            $this->hobbies->add($hobby);
+        }
+
+        return $this;
+    }
+
+    public function removeHobby(Hobbie $hobby): self
+    {
+        $this->hobbies->removeElement($hobby);
+
+        return $this;
+    }
+
+    public function getJob(): ?Job
     {
         return $this->job;
     }
 
-    public function setJob(?string $job): self
+    public function setJob(?Job $job): self
     {
         $this->job = $job;
 
