@@ -10,7 +10,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PersonneController extends AbstractController
-{
+{   
+  
+
     #[Route('/personne', name: 'personne.list')]
     public function index(ManagerRegistry $doctrine): Response
     {   
