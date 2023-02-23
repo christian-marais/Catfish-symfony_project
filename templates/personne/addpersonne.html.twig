@@ -3,10 +3,11 @@
 {% block PageTitle %}Hello PersonneController!{% endblock %}
 
 {% block body %}
-    {{dump(personne)}}
+    {# {{dump(personne)}} #}
+    {{ form(form, {'method': 'GET'}) }}
 
-    <div class="alert alert-success">
+    {# <div class="alert alert-success">
         {{personne.name}} {{personne.firstname}}  a été créé.
-    </div>
+    </div> #}
 
 {% endblock %}
