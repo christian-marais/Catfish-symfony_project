@@ -23,7 +23,7 @@ class PersonneController extends AbstractController
         ]);
     }
 
-    #[Route('/personne/filterAge/{ageMin}/{ageMax}', name: 'personne.list.age')]
+    #[Route('/personne/filter/age/{ageMin}/{ageMax}', name: 'personne.list.age')]
     public function findPersonneByAge(ManagerRegistry $doctrine,$ageMin,$ageMax): Response
     {   
         $repository=$doctrine->getRepository(persistentObject:Personne::class);
@@ -35,7 +35,21 @@ class PersonneController extends AbstractController
         ]);
     }
 
-    #[Route('/alls/{page<\d+>?1}/{nb<\d+>?12}', name: 'personne.list.alls')]
+    #[Route('/personne/stats/age/{ageMin}/{ageMax}', name: 'personne.list.stats.age')]
+    public function statsPersonneByAge(ManagerRegistry $doctrine,$ageMin,$ageMax): Response
+    {   
+        $repository=$doctrine->getRepository(persistentObject:Personne::class);
+        $stats=$repository->statsByAgeInterval($ageMin,$ageMax);
+        return $this->render('personne/statsAge.html.twig', [
+            'controller_name' => 'PersonneController',
+            'statsAge'=>$stats[0],
+            'ageMin'=>$ageMin,
+            'ageMax'=>$ageMax,
+            'isPaginated'=>false
+        ]);
+    }
+
+    #[Route('/personne/alls/{page<\d+>?1}/{nb<\d+>?12}', name: 'personne.list.alls')]
     public function indexAlls(ManagerRegistry $doctrine,$page,$nb): Response
     {   
         $repository=$doctrine->getRepository(persistentObject:Personne::class);

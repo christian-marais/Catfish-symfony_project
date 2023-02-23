@@ -1,0 +1,48 @@
+{% extends 'template.html.twig' %}
+
+{% block PageTitle %}Hello PersonneController!{% endblock %}
+
+{% block body %}
+
+    {% for name,value in app.session.flashBag.get('success')%}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    {#{dump(personnes)}#}
+
+    <div class="row">
+            <div class="card col-3 m-3">
+                <div class="card-body">
+                    <h2 class="card-title"> Statistiques de Moyenne d'age </h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Age Moyen : {{toInt(statsAge.ageMoyen)}}</li>
+                    <li class="list-group-item">Nombre de Personne : {{statsAge.nombrePersonne}}</li>
+                </ul>
+                <div class="card-body">
+                    <li class="list-group-item">Age Min : {{ageMin}}</li>
+                    <li class="list-group-item">Age Max : {{ageMax}}</li>
+                </div>
+            </div>
+    </div>
+    {% if isPaginated %}
+    <div class="row ">
+        <nav aria-label="Page navigation example ms-4">
+            <ul class="pagination">
+                {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page: page - 1,nb:nb})}}">Previous</a></li>
+                    
+                {% endif %}
+                {% for i in range(page,nbPages) %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page:i,nb:nb})}}">{{i}}</a></li>
+                {% endfor %}
+                {% if page < nbPages %}
+                    <li class="page-item"><a class="page-link" href="{{path('personne.list.alls',{page:page + 1,nb:nb})}}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+{% endblock %}
