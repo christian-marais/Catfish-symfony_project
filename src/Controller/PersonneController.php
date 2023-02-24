@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PersonneController extends AbstractController
@@ -133,12 +134,27 @@ class PersonneController extends AbstractController
         ]);
     }
     #[Route(path:'/personne/add/', name:'personne.add')]
-    public function addPersonne(ManagerRegistry $doctrine):Response
-    {
-        $entityManager = $doctrine->getManager();
+    public function addPersonne(ManagerRegistry $doctrine, Request $request):mixed
+    {   
+        dump($request);
+      
         $personne = new Personne();
         $form = $this->createForm(PersonneType::class, $personne);
+        $form->remove(name:'createdAt');
+        $form->remove(name:'updatedAt');
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($personne);
+            $entityManager->flush();
+            $this->addFlash(
+            type:'success',
+            message:'La personne '.$personne->getName().' '.$personne->getFirstname().'a été ajouté avec succès');
+            return $this->redirectToRoute('personne.list');
+        }else{
 
+        }
+        
         // $personne->setFirstname(firstname:'Jean');
         // $personne->setName(name:'Bizance');
         // $personne->setAge(age:22);
