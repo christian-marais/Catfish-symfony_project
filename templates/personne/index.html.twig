@@ -14,7 +14,7 @@
 
     <div class="row">
         {% for personne in personnes %}
-            <div class="card col-3 m-3">
+            <div class="card col-4 m-3">
                 <div class="card-body">
                     <h5 class="card-title">{{personne.name}} {{personne.firstname}} </h5>
                 </div>
@@ -24,6 +24,7 @@
                 </ul>
                 <div class="card-body">
                      <a href="{{path('personne.detail',{id:personne.id})}}" class="card-link btn btn-info">Détail</a>
+                     <a href="{{path('personne.edit',{id:personne.id})}}" class="card-link btn btn-success">Editer</a>
                      <a href="{{path('personne.delete',{id:personne.id})}}" class="card-link btn btn-danger">Supprimer</a>
                 </div>
             </div>
